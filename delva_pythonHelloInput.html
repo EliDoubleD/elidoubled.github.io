@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Number Guessing Game</title>
+    <link rel="stylesheet" href="https://pyscript.net/latest/pyscript.css" />
+    <script defer src="https://pyscript.net/latest/pyscript.js"></script>
+</head>
+<body>
+    <h1>Number Guessing Game</h1>
+    <input type="number" id="guess" name="guess" min="1" max="100" />
+    <button id="submitGuess">Guess</button>
+    <div id="result"></div>
+
+    <py-script>
+        from pyscript import Element
+        import random
+
+        # Generate a random number between 1 and 100
+        secret_number = random.randint(1, 100)
+
+        # Function to check the user's guess
+        def check_guess(*args):
+            guess_input = Element("guess")
+            result_div = Element("result")
+            
+            try:
+                user_guess = int(guess_input.value)
+                if user_guess < secret_number:
+                    result_div.write("You guessed too low, try again.")
+                elif user_guess > secret_number:
+                    result_div.write("You guessed too high, try again.")
+                else:
+                    result_div.write("You guessed correctly!")
+            except ValueError:
+                result_div.write("Please enter a valid number.")
+
+        # Bind the check_guess function to the button click
+        Element("submitGuess").element.onclick = check_guess
+    </py-script>
+</body>
+</html>
